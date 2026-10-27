@@ -1,0 +1,9 @@
+# Dependencies & Logs
+node_modules/
+*.log
+.env
+.env.*
+.DS_Store
+
+# Temporary files
+*.tmp

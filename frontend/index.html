@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="ur" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umer Pansar & Dry Fruits | عمر پنسار اینڈ ڈرائی فروٹس</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f3d2e;
+            --primary-dark: #08231a;
+            --primary-light: #1b5e46;
+            --accent: #d4a373;
+            --accent-gold: #c59b27;
+            --accent-gold-light: #faedcd;
+            --danger: #e63946;
+            --success: #2a9d8f;
+            --bg: #f4f7f5;
+            --surface: #ffffff;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --border: #e2e8f0;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 25px rgba(15,61,46,0.15);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-dark); min-height: 100vh; overflow-x: hidden; }
+
+        /* Urdu font utility */
+        .urdu { font-family: 'Noto Nastaliq Urdu', serif; direction: rtl; }
+
+        /* Top Announcement Bar */
+        .top-bar {
+            background: var(--primary-dark);
+            color: #d1fae5;
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .top-bar-left span { color: var(--accent-gold); font-weight: 700; }
+        .top-bar-right a { color: #ffffff; text-decoration: none; font-weight: 600; margin-left: 15px; }
+        .top-bar-right a:hover { color: var(--accent-gold); }
+
+        /* Hero Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 40px 20px 45px;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+        }
+        .header-content { max-width: 900px; margin: 0 auto; position: relative; z-index: 2; }
+        .urdu-main-title {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 2.3rem;
+            color: var(--accent-gold-light);
+            margin-bottom: 8px;
+            line-height: 1.6;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        header h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        header p.tagline {
+            font-size: 1.05rem;
+            color: #e2e8f0;
+            max-width: 650px;
+            margin: 0 auto 20px;
+            line-height: 1.5;
+        }
+        .owner-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(10px);
+            padding: 8px 18px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.9rem;
+            color: #faedcd;
+            font-weight: 600;
+        }
+
+        /* Trust Badges */
+        .trust-bar {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            box-shadow: var(--shadow-sm);
+        }
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .trust-item span.icon { font-size: 1.3rem; }
+
+        /* Main App Container */
+        .app-container {
+            max-width: 1350px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        /* Category Filter Portals */
+        .portals-section {
+            margin-bottom: 25px;
+        }
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .portal-card {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 16px 18px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+        }
+        .portal-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent-gold);
+        }
+        .portal-card.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-color: var(--accent-gold);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+        .portal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .portal-icon { font-size: 1.8rem; }
+        .portal-badge {
+            background: rgba(0,0,0,0.06);
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .portal-card.active .portal-badge {
+            background: rgba(255,255,255,0.25);
+            color: white;
+        }
+        .portal-title-en { font-size: 1rem; font-weight: 700; margin-bottom: 3px; }
+        .portal-title-ur { font-family: 'Noto Nastaliq Urdu', serif; font-size: 1.1rem; line-height: 1.4; color: var(--accent-gold); }
+        .portal-card.active .portal-title-ur { color: var(--accent-gold-light); }
+
+        /* Search & Controls */
+        .search-bar-wrap {
+            display: flex;
+            gap: 12px;
+            background: var(--surface);
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 25px;
+        }
+        .search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            color: var(--text-dark);
+            background: transparent;
+        }
+        .search-icon { font-size: 1.2rem; color: var(--text-muted); }
+
+        /* Catalog Grid */
+        .catalog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .catalog-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        .item-count-badge {
+            background: #e2e8f0;
+            color: #475569;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background: var(--surface);
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: #cbd5e1;
+        }
+        .product-img-wrap {
+            height: 170px;
+            width: 100%;
+            position: relative;
+            background: #f1f5f9;
+            overflow: hidden;
+        }
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .product-card:hover .product-img {
+            transform: scale(1.06);
+        }
+        .category-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(15, 61, 46, 0.85);
+            color: white;
+            backdrop-filter: blur(4px);
+            padding: 3px 9px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .product-info {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: space-between;
+        }
+        .product-ur-title {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 1.15rem;
+            color: var(--primary);
+            line-height: 1.5;
+            direction: rtl;
+            margin-bottom: 6px;
+        }
+        .product-en-title {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        .product-pricing {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 14px;
+            padding-top: 8px;
+            border-top: 1px dashed var(--border);
+        }
+        .price-val {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary-light);
+        }
+        .unit-val {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .btn-add-cart {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 9px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-add-cart:hover {
+            background: var(--primary-light);
+        }
+
+        /* Cart / Checkout Sidebar */
+        .checkout-sidebar {
+            background: var(--surface);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 20px;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-gold) #f1f5f9;
+        }
+        .checkout-sidebar::-webkit-scrollbar { width: 6px; }
+        .checkout-sidebar::-webkit-scrollbar-thumb { background: var(--accent-gold); border-radius: 4px; }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--bg);
+            margin-bottom: 16px;
+        }
+        .cart-title { font-size: 1.25rem; font-weight: 800; color: var(--primary); }
+        .cart-items-container {
+            max-height: 180px;
+            overflow-y: auto;
+            margin-bottom: 14px;
+        }
+        .cart-empty-state {
+            text-align: center;
+            padding: 35px 10px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .cart-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.9rem;
+        }
+        .cart-item-details { flex: 1; padding-right: 10px; }
+        .cart-item-name { font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
+        .cart-item-sub { font-size: 0.8rem; color: var(--text-muted); }
+        .cart-item-price { font-weight: 800; color: var(--primary); white-space: nowrap; }
+        .btn-remove-item {
+            background: none;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            margin-left: 8px;
+            font-weight: bold;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+        }
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #475569;
+        }
+        .summary-line.total {
+            border-top: 2px solid #cbd5e1;
+            padding-top: 10px;
+            margin-top: 10px;
+            margin-bottom: 0;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        /* Order Form */
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 0.95rem;
+            margin-bottom: 14px;
+            outline: none;
+        }
+        .form-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(15,61,46,0.1); }
+
+        .btn-cod {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(15, 61, 46, 0.25);
+            margin-bottom: 10px;
+            transition: all 0.2s;
+        }
+        .btn-cod:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(15,61,46,0.3); }
+
+        .btn-wa {
+            width: 100%;
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .btn-wa:hover { background: #20ba5a; }
+
+        /* Notification Toast */
+        .toast {
+            display: none;
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+        .toast-success { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+        .toast-error { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            color: #94a3b8;
+            padding: 40px 20px 30px;
+            text-align: center;
+            margin-top: 60px;
+            border-top: 4px solid var(--accent-gold);
+        }
+        .footer-content { max-width: 800px; margin: 0 auto; }
+        .footer-owner { color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+        .footer-phone { color: var(--accent-gold); font-size: 1.2rem; font-weight: 800; margin-bottom: 16px; }
+        .footer-link {
+            color: #cbd5e1;
+            text-decoration: none;
+            background: rgba(255,255,255,0.08);
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
+            transition: all 0.2s;
+        }
+        .footer-link:hover { background: var(--accent-gold); color: var(--primary-dark); }
+
+        @media (max-width: 992px) {
+            .app-container { grid-template-columns: 1fr; }
+            .checkout-sidebar { position: static; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <span>✨ 100% خالص اور قدرتی:</span> تمام دیسی جڑی بوٹیاں، قندھاری ڈرائی فروٹس اور خالص روغنیات
+        </div>
+        <div class="top-bar-right">
+            <span>📞 آرڈر و معلومات: <strong>0312-9484670</strong></span>
+            <a href="admin.html">🔐 مالک ایڈمن پورٹل</a>
+        </div>
+    </div>
+
+    <!-- 2. Hero Header -->
+    <header>
+        <div class="header-content">
+            <div class="urdu-main-title">عمر پنسار اینڈ ڈرائی فروٹس</div>
+            <h1>Umer Pansar & Dry Fruits</h1>
+            <p class="tagline">
+                پاکستان کا مستند ترین طب و حکمت، مصدقہ پہاڑی ڈرائی فروٹس اور خالص کشیدہ روغنیات کا آن لائن پلیٹ فارم
+            </p>
+            <div class="owner-badge">
+                <span>👑 پروپرائٹر: <strong>محمد عمر</strong></span>
+                <span>|</span>
+                <span>📱 0312-9484670 (کال اور واٹس ایپ)</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. Trust Bar -->
+    <div class="trust-bar">
+        <div class="trust-item"><span class="icon">🌿</span> ۱۰۰ فیصد خالص جڑی بوٹیاں</div>
+        <div class="trust-item"><span class="icon">🥜</span> فریش قندھاری و گلگتی ڈرائی فروٹس</div>
+        <div class="trust-item"><span class="icon">🍯</span> کولڈ پریسڈ خالص روغنیات</div>
+        <div class="trust-item"><span class="icon">🚚</span> کیش آن ڈیلیوری پورے پاکستان میں</div>
+    </div>
+
+    <!-- 4. Main App Container -->
+    <div class="app-container">
+
+        <!-- Left: Portals & Product Catalog -->
+        <main>
+            <!-- 3 Big Portals -->
+            <section class="portals-section">
+                <div class="portal-grid">
+                    <!-- All Items Portal -->
+                    <div class="portal-card active" onclick="setCategory('All', this)">
+                        <div class="portal-header">
+                            <span class="portal-icon">✨</span>
+                            <span class="portal-badge" id="countAll">162 اشیاء</span>
+                        </div>
+                        <div class="portal-title-en">All Products</div>
+                        <div class="portal-title-ur">تمام مصنوعات</div>
+                    </div>
+
+                    <!-- Hikmat Portal -->
+                    <div class="portal-card" onclick="setCategory('Hikmat', this)">
+                        <div class="portal-header">
+                            <span class="portal-icon">🌿</span>
+                            <span class="portal-badge" id="countHikmat">102 اشیاء</span>
+                        </div>
+                        <div class="portal-title-en">Tib-o-Hikmat</div>
+                        <div class="portal-title-ur">طب و حکمت و جڑی بوٹیاں</div>
+                    </div>
+
+                    <!-- Dry Fruits Portal -->
+                    <div class="portal-card" onclick="setCategory('Dry Fruits', this)">
+                        <div class="portal-header">
+                            <span class="portal-icon">🥜</span>
+                            <span class="portal-badge" id="countDry">32 اشیاء</span>
+                        </div>
+                        <div class="portal-title-en">Dry Fruits</div>
+                        <div class="portal-title-ur">پریمیم ڈرائی فروٹس</div>
+                    </div>
+
+                    <!-- Oils Portal -->
+                    <div class="portal-card" onclick="setCategory('Oils', this)">
+                        <div class="portal-header">
+                            <span class="portal-icon">🍯</span>
+                            <span class="portal-badge" id="countOils">28 اشیاء</span>
+                        </div>
+                        <div class="portal-title-en">Pure Oils & Roghan</div>
+                        <div class="portal-title-ur">خالص روغنیات و کشیدات</div>
+                    </div>
+                </div>
+
+                <!-- Instant Search Bar -->
+                <div class="search-bar-wrap">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" class="search-input" placeholder="تلاش کریں... Search by Urdu or English name (e.g. بادام، کلونجی، Badam, Zafran, Roghan)" oninput="handleSearch()">
+                </div>
+            </section>
+
+            <!-- Catalog Section -->
+            <div class="catalog-header">
+                <div class="catalog-title" id="activeCategoryTitle">تمام مصنوعات (All Items)</div>
+                <div class="item-count-badge" id="visibleCount">162 Items Listed</div>
+            </div>
+
+            <!-- Dynamic Product Grid -->
+            <div class="product-grid" id="productGrid">
+                <!-- Rendered Dynamically via JavaScript -->
+            </div>
+        </main>
+
+        <!-- Right: Order Basket & Checkout -->
+        <aside>
+            <div class="checkout-sidebar">
+                <div class="cart-header">
+                    <div class="cart-title">🛒 آپ کی ٹوکری (Basket)</div>
+                    <span class="item-count-badge" id="cartBadge">0</span>
+                </div>
+
+                <!-- Cart Items List -->
+                <div class="cart-items-container" id="cartContainer">
+                    <div class="cart-empty-state">
+                        آپ کی ٹوکری خالی ہے۔ مصنوعات منتخب کر کے ٹوکری میں شامل کریں۔
+                    </div>
+                </div>
+
+                <!-- Price Summary -->
+                <div class="order-summary">
+                    <div class="summary-line">
+                        <span>سب ٹوٹل (Subtotal):</span>
+                        <strong id="subTotalText">Rs 0</strong>
+                    </div>
+                    <div class="summary-line">
+                        <span>ڈلیوری چارجز (Delivery):</span>
+                        <strong id="deliveryText">Rs 200</strong>
+                    </div>
+                    <div class="summary-line total">
+                        <span>کل رقم (Grand Total):</span>
+                        <strong id="grandTotalText">Rs 0</strong>
+                    </div>
+                </div>
+
+                <!-- Checkout Form -->
+                <form id="orderForm" onsubmit="submitOrder(event)">
+                    <label class="form-label">گاہک کا پورا نام (Customer Full Name):</label>
+                    <input type="text" id="custName" class="form-input" placeholder="مثال: عبداللہ خان / Abdullah Khan" required>
+
+                    <label class="form-label">موبائل / واٹس ایپ نمبر (Phone / WhatsApp):</label>
+                    <input type="tel" id="custPhone" class="form-input" placeholder="0312-XXXXXXX" required>
+
+                    <label class="form-label">شہر اور مکمل پتہ (Delivery Address):</label>
+                    <input type="text" id="custAddress" class="form-input" placeholder="مکان نمبر، گلی، علاقہ، شہر" required>
+
+                    <button type="submit" class="btn-cod">
+                        🚀 کیش آن ڈیلیوری آرڈر کنفرم کریں
+                    </button>
+
+                    <button type="button" class="btn-wa" onclick="orderOnWhatsApp()">
+                        💬 واٹس ایپ پر ڈائریکٹ بھیجیں
+                    </button>
+                </form>
+
+                <div id="toast" class="toast"></div>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- 5. Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-owner">عمر پنسار اینڈ ڈرائی فروٹس — پروپرائٹر: محمد عمر</div>
+            <div class="footer-phone">📞 0312-9484670 (کال اور واٹس ایپ ۲۴ گھنٹے دستیاب)</div>
+            <p style="font-size: 0.9rem; margin-bottom: 12px;">
+                مستند حکمت یونانی، اصل دیسی ادویات، قندھاری مغزیات اور خالص کولڈ پریسڈ تیل
+            </p>
+            <a href="admin.html" class="footer-link">🔐 Muhammad Umer Admin Control Center</a>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        const API_BASE = 'http://localhost:5000/api';
+        let allProducts = [];
+        let filteredProducts = [];
+        let currentCategory = 'All';
+        let cart = [];
+
+        // Fetch Products from PostgreSQL Backend
+        async function loadProducts() {
+            try {
+                const res = await fetch(`${API_BASE}/products`);
+                if (res.ok) {
+                    allProducts = await res.json();
+                    filteredProducts = [...allProducts];
+                    updateCategoryCounts();
+                    renderGrid();
+                } else {
+                    console.error('Failed to fetch from DB');
+                    showToast('Backend API Error! Make sure node server.js is running.', 'error');
+                }
+            } catch (err) {
+                console.error('Connection error:', err);
+                showToast('Backend offline! Start node server.js on port 5000.', 'error');
+            }
+        }
+
+        // Update counts on cards
+        function updateCategoryCounts() {
+            const countHikmat = allProducts.filter(p => p.category === 'Hikmat').length;
+            const countDry = allProducts.filter(p => p.category === 'Dry Fruits').length;
+            const countOils = allProducts.filter(p => p.category === 'Oils').length;
+
+            document.getElementById('countAll').innerText = `${allProducts.length} اشیاء`;
+            document.getElementById('countHikmat').innerText = `${countHikmat} اشیاء`;
+            document.getElementById('countDry').innerText = `${countDry} اشیاء`;
+            document.getElementById('countOils').innerText = `${countOils} اشیاء`;
+        }
+
+        // Filter by Category
+        function setCategory(cat, element) {
+            currentCategory = cat;
+            document.querySelectorAll('.portal-card').forEach(c => c.classList.remove('active'));
+            if (element) element.classList.add('active');
+
+            const titleMap = {
+                'All': 'تمام مصنوعات (All Items)',
+                'Hikmat': 'طب و حکمت و دیسی جڑی بوٹیاں (Tib-o-Hikmat)',
+                'Dry Fruits': 'پریمیم ڈرائی فروٹس (Premium Dry Fruits)',
+                'Oils': 'خالص روغنیات و کشیدات (Pure Oils & Roghaniyat)'
+            };
+            document.getElementById('activeCategoryTitle').innerText = titleMap[cat] || cat;
+
+            handleSearch();
+        }
+
+        // Search Filter (Urdu + English)
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            
+            filteredProducts = allProducts.filter(item => {
+                const matchCat = (currentCategory === 'All') || (item.category === currentCategory);
+                const matchQuery = !query || 
+                    item.name_en.toLowerCase().includes(query) || 
+                    item.name_ur.includes(query);
+                return matchCat && matchQuery;
+            });
+
+            document.getElementById('visibleCount').innerText = `${filteredProducts.length} Items Listed`;
+            renderGrid();
+        }
+
+        // Render Product Cards
+        function renderGrid() {
+            const container = document.getElementById('productGrid');
+            if (filteredProducts.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 50px; background: white; border-radius: 12px; color: #64748b;">
+                        <h3>کوئی چیز نہیں ملی (No Products Found)</h3>
+                        <p style="margin-top: 8px;">برائے مہربانی تلاش کا لفظ تبدیل کر کے دیکھیں</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filteredProducts.map(item => `
+                <div class="product-card">
+                    <div class="product-img-wrap">
+                        <img src="${item.image_url}" alt="${item.name_en}" class="product-img" loading="lazy">
+                        <span class="category-tag">${item.category}</span>
+                    </div>
+                    <div class="product-info">
+                        <div>
+                            <div class="product-ur-title">${item.name_ur}</div>
+                            <div class="product-en-title">${item.name_en}</div>
+                        </div>
+                        <div>
+                            <div class="product-pricing">
+                                <span class="price-val">Rs ${Number(item.price).toLocaleString()}</span>
+                                <span class="unit-val">${item.unit}</span>
+                            </div>
+                            <button class="btn-add-cart" onclick="addToCart(${item.id})">
+                                <span>➕ ٹوکری میں شامل کریں</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Add to Cart
+        function addToCart(productId) {
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = cart.find(c => c.id === productId);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name_en: product.name_en,
+                    name_ur: product.name_ur,
+                    price: Number(product.price),
+                    unit: product.unit,
+                    qty: 1
+                });
+            }
+
+            updateCartUI();
+            showToast(`✅ ${product.name_ur} ٹوکری میں شامل ہو گیا!`, 'success');
+        }
+
+        // Remove from Cart
+        function removeFromCart(productId) {
+            cart = cart.filter(c => c.id !== productId);
+            updateCartUI();
+        }
+
+        // Update Cart UI
+        function updateCartUI() {
+            const container = document.getElementById('cartContainer');
+            const badge = document.getElementById('cartBadge');
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            badge.innerText = totalQty;
+
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="cart-empty-state">آپ کی ٹوکری خالی ہے۔ مصنوعات منتخب کر کے ٹوکری میں شامل کریں۔</div>`;
+                document.getElementById('subTotalText').innerText = 'Rs 0';
+                document.getElementById('grandTotalText').innerText = 'Rs 0';
+                return;
+            }
+
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item-row">
+                    <div class="cart-item-details">
+                        <div class="cart-item-name">${item.name_ur} (${item.qty}x)</div>
+                        <div class="cart-item-sub">${item.name_en} - ${item.unit}</div>
+                    </div>
+                    <div class="cart-item-price">
+                        Rs ${(item.price * item.qty).toLocaleString()}
+                        <button class="btn-remove-item" onclick="removeFromCart(${item.id})" title="Remove">✕</button>
+                    </div>
+                </div>
+            `).join('');
+
+            const subTotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+            const delivery = 200;
+            const grandTotal = subTotal + delivery;
+
+            document.getElementById('subTotalText').innerText = `Rs ${subTotal.toLocaleString()}`;
+            document.getElementById('grandTotalText').innerText = `Rs ${grandTotal.toLocaleString()}`;
+        }
+
+        // Submit Cash on Delivery Order (Post to PostgreSQL API)
+        async function submitOrder(e) {
+            e.preventDefault();
+            if (cart.length === 0) {
+                showToast('پہلے ٹوکری میں اشیاء شامل کریں! (Cart is empty)', 'error');
+                return;
+            }
+
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+            const itemsList = cart.map(i => `${i.name_ur} (${i.qty}x ${i.unit})`).join(' | ');
+            const subTotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+            const grandTotal = subTotal + 200;
+
+            const payload = {
+                customer_name: name,
+                phone: phone,
+                address: address,
+                items: itemsList,
+                total_price: grandTotal
+            };
+
+            try {
+                const res = await fetch(`${API_BASE}/orders`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    showToast(`🎉 مبارک ہو! آرڈر #${data.order.id} درج ہو گیا۔ محمد عمر (0312-9484670) جلد رابطہ کریں گے۔`, 'success');
+                    cart = [];
+                    updateCartUI();
+                    document.getElementById('orderForm').reset();
+                } else {
+                    showToast('آرڈر محفوظ نہیں ہو سکا! کوڈ: ' + res.status, 'error');
+                }
+            } catch (err) {
+                showToast('بیک اینڈ تک رسائی نہیں ہو سکی! Is server.js running?', 'error');
+            }
+        }
+
+        // Direct WhatsApp Order
+        function orderOnWhatsApp() {
+            if (cart.length === 0) {
+                showToast('پہلے ٹوکری میں اشیاء شامل کریں!', 'error');
+                return;
+            }
+            const name = document.getElementById('custName').value.trim() || 'گاہک (Customer)';
+            const phone = document.getElementById('custPhone').value.trim() || 'N/A';
+            const address = document.getElementById('custAddress').value.trim() || 'N/A';
+            const subTotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+            const grandTotal = subTotal + 200;
+
+            const itemsStr = cart.map(i => `• ${i.name_ur} (${i.name_en}) - ${i.qty}x = Rs ${i.price * i.qty}`).join('%0A');
+            const msg = `*السلام علیکم محمد عمر بھائی (عمر پنسار)!*%0A%0A*گاہک کی تفصیلات:*%0Aنام: ${name}%0Aفون: ${phone}%0Aپتہ: ${address}%0A%0A*آرڈر کی اشیاء:*%0A${itemsStr}%0A%0A*ڈلیوری:* Rs 200%0A*کل بل:* Rs ${grandTotal}%0A%0Aبراہ کرم میرا آرڈر کنفرم کر دیں۔ شکریہ!`;
+
+            window.open(`https://wa.me/923129484670?text=${msg}`, '_blank');
+        }
+
+        // Show Toast
+        function showToast(msg, type) {
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            toast.className = `toast toast-${type}`;
+            toast.innerText = msg;
+            setTimeout(() => { toast.style.display = 'none'; }, 7000);
+        }
+
+        // Initialize on Load
+        window.addEventListener('DOMContentLoaded', loadProducts);
+    </script>
+</body>
+</html>

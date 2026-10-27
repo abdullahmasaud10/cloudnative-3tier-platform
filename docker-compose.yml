@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  # ==========================================
+  # 1. DATABASE TIER (PostgreSQL 16)
+  # ==========================================
+  db:
+    image: postgres:16-alpine
+    container_name: umer-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: umer_pansar
+    ports:
+      - "5432:5432"
+    volumes:
+      # Data permanent hard disk par save rakhna
+      - postgres_data:/var/lib/postgresql/data
+      # 162 Items khud-ba-khud pehli dafa load karna
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - umer-network
+
+  # ==========================================
+  # 2. BACKEND API TIER (Node.js Express)
+  # ==========================================
+  backend:
+    image: umer-backend:prod-v1
+    container_name: umer-backend
+    restart: always
+    environment:
+      PORT: 5000
+      DATABASE_URL: postgresql://postgres:password123@db:5432/umer_pansar
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    networks:
+      - umer-network
+
+  # ==========================================
+  # 3. FRONTEND TIER (NGINX Web Server)
+  # ==========================================
+  frontend:
+    image: umer-frontend:prod-v1
+    container_name: umer-frontend
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - umer-network
+
+# ==========================================
+# VOLUMES & NETWORKS
+# ==========================================
+volumes:
+  postgres_data:
+
+networks:
+  umer-network:
+    driver: bridge
