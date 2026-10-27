@@ -1,9 +1,5 @@
-version: '3.8'
-
 services:
-  # ==========================================
-  # 1. DATABASE TIER (PostgreSQL 16)
-  # ==========================================
+  # 1. DATABASE
   db:
     image: postgres:16-alpine
     container_name: umer-db
@@ -15,18 +11,14 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      # Data permanent hard disk par save rakhna
       - postgres_data:/var/lib/postgresql/data
-      # 162 Items khud-ba-khud pehli dafa load karna
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - umer-network
 
-  # ==========================================
-  # 2. BACKEND API TIER (Node.js Express)
-  # ==========================================
+  # 2. BACKEND API (Docker Hub ka poora naam)
   backend:
-    image: umer-backend:prod-v1
+    image: abdullahmasaud10/umer-backend:latest
     container_name: umer-backend
     restart: always
     environment:
@@ -39,23 +31,18 @@ services:
     networks:
       - umer-network
 
-  # ==========================================
-  # 3. FRONTEND TIER (NGINX Web Server)
-  # ==========================================
+  # 3. FRONTEND (Docker Hub ka poora naam + Port 80)
   frontend:
-    image: umer-frontend:prod-v1
+    image: abdullahmasaud10/umer-frontend:latest
     container_name: umer-frontend
     restart: always
     ports:
-      - "8080:80"
+      - "80:80"
     depends_on:
       - backend
     networks:
       - umer-network
 
-# ==========================================
-# VOLUMES & NETWORKS
-# ==========================================
 volumes:
   postgres_data:
 
