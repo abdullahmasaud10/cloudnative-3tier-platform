@@ -1,31 +1,26 @@
-name: Build and Push to Docker Hub
+name: Complete CI/CD Pipeline (Build, Push & Deploy)
 
-# Jab bhi main branch par code push ho, yeh pipeline chalegi
 on:
   push:
     branches: [ "main" ]
 
 jobs:
+  # PART 1: CI (Build & Push to Docker Hub)
   build-and-push:
     runs-on: ubuntu-latest
-
     steps:
-      # 1. Code download karna
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 2. Docker Hub par Login hona (Secrets use karke)
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 3. Fast Docker Build tool setup karna
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # 4. Backend Image build aur Docker Hub par upload karna
       - name: Build and Push Backend
         uses: docker/build-push-action@v5
         with:
@@ -35,7 +30,6 @@ jobs:
             abdullahmasaud10/umer-backend:latest
             abdullahmasaud10/umer-backend:${{ github.sha }}
 
-      # 5. Frontend Image build aur Docker Hub par upload karna
       - name: Build and Push Frontend
         uses: docker/build-push-action@v5
         with:
@@ -44,3 +38,20 @@ jobs:
           tags: |
             abdullahmasaud10/umer-frontend:latest
             abdullahmasaud10/umer-frontend:${{ github.sha }}
+
+  # PART 2: CD (Automated Deploy to AWS EC2)
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to AWS EC2 via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/cloudnative-3tier-platform
+            git pull origin main
+            docker compose pull
+            docker compose up -d --remove-orphans
