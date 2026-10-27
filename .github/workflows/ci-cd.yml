@@ -1,0 +1,46 @@
+name: Build and Push to Docker Hub
+
+# Jab bhi main branch par code push ho, yeh pipeline chalegi
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Code download karna
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Docker Hub par Login hona (Secrets use karke)
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 3. Fast Docker Build tool setup karna
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 4. Backend Image build aur Docker Hub par upload karna
+      - name: Build and Push Backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: |
+            abdullah8010/umer-backend:latest
+            abdullah8010/umer-backend:${{ github.sha }}
+
+      # 5. Frontend Image build aur Docker Hub par upload karna
+      - name: Build and Push Frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: |
+            abdullah8010/umer-frontend:latest
+            abdullah8010/umer-frontend:${{ github.sha }}
