@@ -32,8 +32,8 @@ jobs:
           context: ./backend
           push: true
           tags: |
-            abdullah8010/umer-backend:latest
-            abdullah8010/umer-backend:${{ github.sha }}
+            abdullahmasaud10/umer-backend:latest
+            abdullahmasaud10/umer-backend:${{ github.sha }}
 
       # 5. Frontend Image build aur Docker Hub par upload karna
       - name: Build and Push Frontend
@@ -42,5 +42,5 @@ jobs:
           context: ./frontend
           push: true
           tags: |
-            abdullah8010/umer-frontend:latest
-            abdullah8010/umer-frontend:${{ github.sha }}
+            abdullahmasaud10/umer-frontend:latest
+            abdullahmasaud10/umer-frontend:${{ github.sha }}
