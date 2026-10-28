@@ -1,5 +1,7 @@
 services:
-  # 1. DATABASE
+  # ========================================================
+  # PERSISTENCE TIER: PostgreSQL 16 Stateful Service
+  # ========================================================
   db:
     image: postgres:16-alpine
     container_name: umer-db
@@ -14,24 +16,35 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - umer-network
+      - cloudnative-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  # 2. BACKEND API (Docker Hub ka poora naam)
+  # ========================================================
+  # APPLICATION TIER: Express REST API Service
+  # ========================================================
   backend:
     image: abdullahmasaud10/umer-backend:latest
     container_name: umer-backend
     restart: always
     environment:
       PORT: 5000
+      NODE_ENV: production
       DATABASE_URL: postgresql://postgres:password123@db:5432/umer_pansar
     ports:
       - "5000:5000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
-      - umer-network
+      - cloudnative-net
 
-  # 3. FRONTEND (Docker Hub ka poora naam + Port 80)
+  # ========================================================
+  # PRESENTATION TIER: NGINX Reverse Proxy & Static Server
+  # ========================================================
   frontend:
     image: abdullahmasaud10/umer-frontend:latest
     container_name: umer-frontend
@@ -41,11 +54,15 @@ services:
     depends_on:
       - backend
     networks:
-      - umer-network
+      - cloudnative-net
 
+# ========================================================
+# STORAGE & NETWORK ISOLATION DEFINITIONS
+# ========================================================
 volumes:
   postgres_data:
+    driver: local
 
 networks:
-  umer-network:
+  cloudnative-net:
     driver: bridge

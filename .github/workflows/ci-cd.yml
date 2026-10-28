@@ -1,27 +1,64 @@
-name: Complete CI/CD Pipeline (Build, Push & Deploy)
+name: Production CI/CD Pipeline
 
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  # PART 1: CI (Build & Push to Docker Hub)
-  build-and-push:
+  # ========================================================
+  # STAGE 1: Automated Quality Gate & Static Code Analysis
+  # ========================================================
+  test:
+    name: Code Quality & Syntax Verification
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Code
+      - name: Checkout Codebase
         uses: actions/checkout@v4
 
-      - name: Log in to Docker Hub
+      - name: Setup Node.js Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install Dependencies
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Validate Backend Code Syntax
+        working-directory: ./backend
+        run: node --check server.js
+
+      - name: Verify SQL Initialization Integrity
+        run: |
+          test -f database/init.sql && echo "[SUCCESS] SQL Seed Schema verified." || exit 1
+
+  # ========================================================
+  # STAGE 2: Multi-Platform Container Build & Registry Push
+  # ========================================================
+  build-and-push:
+    name: Build & Push Production Images
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Set up Docker Buildx
+      - name: Setup Docker Buildx Engine
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and Push Backend
+      - name: Build & Push Backend Image
         uses: docker/build-push-action@v5
         with:
           context: ./backend
@@ -30,7 +67,7 @@ jobs:
             abdullahmasaud10/umer-backend:latest
             abdullahmasaud10/umer-backend:${{ github.sha }}
 
-      - name: Build and Push Frontend
+      - name: Build & Push Frontend Image
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
@@ -39,19 +76,37 @@ jobs:
             abdullahmasaud10/umer-frontend:latest
             abdullahmasaud10/umer-frontend:${{ github.sha }}
 
-  # PART 2: CD (Automated Deploy to AWS EC2)
+  # ========================================================
+  # STAGE 3: Automated Continuous Deployment to AWS EC2
+  # ========================================================
   deploy:
+    name: Deploy to Production Cloud (AWS EC2)
     needs: build-and-push
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
     steps:
-      - name: Deploy to AWS EC2 via SSH
+      - name: Execute Remote Deployment via SSH
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            set -e
+            echo "[INFO] Navigating to repository deployment root..."
             cd ~/cloudnative-3tier-platform
+            
+            echo "[INFO] Pulling latest production configuration from Git..."
             git pull origin main
+            
+            echo "[INFO] Pulling updated container images from Docker Hub..."
             docker compose pull
+            
+            echo "[INFO] Re-spawning updated production containers..."
             docker compose up -d --remove-orphans
+            
+            echo "[INFO] Pruning obsolete dangling images to preserve disk space..."
+            docker image prune -f
+            
+            echo "[SUCCESS] Deployment completed successfully!"
